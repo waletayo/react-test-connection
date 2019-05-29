@@ -21,8 +21,25 @@ class Product extends Component {
     };
 
     uploadHandler = () => {
-        console.log(this.state.productImage)
-    };
+        const formData = new FormData();
+        formData.append(
+            'myFile',
+            this.state.productImage,
+            this.state.productImage.name
+        );
+        const productData = {
+            name: this.state.name,
+            price: this.state.price,
+            category: this.state.category,
+            color: this.state.color
+        };
+        axios.post('/api/v1/create', formData, productData)
+            .then(res => {
+                if (res.status === true) {
+                    window.location.href = "/preview"
+                }
+            })
+    }
 
     render() {
         return (
